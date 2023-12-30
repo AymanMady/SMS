@@ -1,0 +1,133 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+    الديون
+{% endblock %}
+
+{% block content %}
+
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">الديون</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="index.html">لوحة التحكم</a></li>
+<li class="breadcrumb-item active">الديون</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="student-group-form">
+<div class="row">
+<div class="col-lg-10 col-md-6">
+<div class="form-group">
+    <input type="text" class="form-control" id="searchInput"  placeholder=".....البحث">
+</div>
+</div>
+<div class="col-lg-2">
+<div class="search-student-btn">
+<button type="submit" class="btn btn-primary">بحث</button>
+</div>
+</div>
+</div>
+</div>
+     </form>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card card-table">
+<div class="card-body">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title"> قائمة المستدينين</h3>
+</div>
+<div class="col-auto text-end float-end ms-auto download-grp">
+<a  href="{% url 'add_pret' %}" class="btn btn-primary">إقتراض</a>
+<a  href="{% url 'add_pay' %}" class="btn btn-primary">دفع قرض</a>
+<a  href="{% url 'add_partenaire' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+</div>
+</div>
+</div>
+
+<div class="table-responsive">
+<table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped" id="dataTable">
+<thead class="student-thread">
+<tr>
+<th colspan="2" class="text-center">الاسم واللقب</th>
+<th>القيمة</th>
+<th>الحالة</th>
+    <th class="text-center">الإجراء</th>
+</tr>
+</thead>
+<tbody>
+{% for i in partenaires %}
+<tr>
+<td>
+<h2 class="table-avatar">
+<a href="teacher-details.html">{{i.nom}}</a>
+</h2>
+</td>
+<td>
+<h2 class="table-avatar">
+<a href="teacher-details.html">{{i.prenom}}</a>
+</h2>
+</td>
+<td>{{i.montant_total}}</td>
+    <td>{% if i.montant_total > 0 %} <span class="badge badge-danger">لم يدفع</span>{% else %} <span class="badge badge-success">دفع</span>{% endif %}</td>
+<td class="text-end">
+<div class="actions ">
+<a href="/show_parent/{{i.id}}" class="btn btn-sm bg-success-light me-2 ">
+<i class="feather-eye"></i>
+</a>
+<a href="/edit_partenaire/{{i.id}}" class="btn btn-sm bg-danger-light">
+<i class="feather-edit"></i>
+</a>
+<a href="/delete_partenaire/{{i.id}}" class="btn btn-sm bg-danger-light">
+    <i class="feather-trash" ></i>
+</a>
+</div>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    {% if messages %}
+      {% for message in messages %}
+        {% if 'success' in message.tags %}
+          Swal.fire({
+            title: 'تمت الإضافة بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% elif 'warning' in message.tags %}
+          Swal.fire({
+            title: 'تمت الإزالة بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% elif 'info' in message.tags %}
+          Swal.fire({
+            title: 'تمت التعديل بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  تعديل التسجيل
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">تعديل التسجيل</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="subjects.html">التسجيل</a></li>
+<li class="breadcrumb-item active">تعديل التسجيل</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/update_inscription/{{inscription.id}}">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>معلومات حول التسجيل</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_etud">الطالب <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_etud" name="id_etud">
+            {% for i in etudiants %}
+                <option value="{{ i.id }}"
+                {% if i.id == inscription.id_etud.id %}selected{% endif %}>
+                {{ i.nom }} {{ i.prenom }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_matiere">المادة <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_matiere" name="id_matiere">
+            {% for i in matieres %}
+                <option value="{{ i.id }}"
+                {% if i.id == inscription.id_matiere.id %}selected{% endif %}>
+                {{ i.libelle }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>العام الدراسي <span class="login-danger">*</span></label>
+<input type="text" class="form-control" value="{{inscription.annee}}" name="annee">
+</div>
+</div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

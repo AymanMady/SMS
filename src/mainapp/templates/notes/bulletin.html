@@ -1,0 +1,68 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  إنشاء نتيجة
+{% endblock %}
+
+{% block content %}
+
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">إنشاء نتيجة </h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="departments.html">النتائج</a></li>
+<li class="breadcrumb-item active">إنشاء نتيجة </li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="{% url 'generer_bulletin' %}">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>تفاصيل  النتيجة </span></h5>
+</div>
+                                <div class="col-12 col-sm-4">
+                            <div class="form-group local-forms">
+                                    <label for="id_etud">الطلاب <span class="login-danger">*</span></label>
+                                    <select class="form-control select" id="id_etud" name="id_etud">
+                                        <option selected disabled>الرجاء اختيار الطالب</option>
+                                        {% for i in etudiants %}
+                                            <option value="{{ i.id }}">{{ i.nom }} {{ i.prenom }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="col-12 col-sm-4">
+                                <div class="form-group local-forms">
+                                    <label for="id_evaluation">الامتحان <span class="login-danger">*</span></label>
+                                    <select class="form-control select" id="id_evaluation" name="id_evaluation">
+                                        <option selected disabled>الرجاء اختيار الامتحان</option>
+                                        {% for i in examens %}
+                                            <option value="{{ i.id }}">{{ i.libelle }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">إنشاء</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

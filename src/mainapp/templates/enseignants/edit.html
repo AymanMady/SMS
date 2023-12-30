@@ -1,0 +1,84 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  تعديل مدرّس
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">تعديل مدرّس</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="teachers.html">المدرّسين</a></li>
+<li class="breadcrumb-item active">تعديل مدرّس</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/update_enseignant/{{enseignant.id}}">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>معلومات أساسية</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الاسم <span class="login-danger">*</span></label>
+<input type="text" class="form-control"  name="nom" value="{{enseignant.nom}}">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>اللقب <span class="login-danger">*</span></label>
+<input type="text" class="form-control" value="{{enseignant.prenom}}" name="prenom">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="sexe">الجنس <span class="login-danger">*</span></label>
+        <select class="form-control select" id="sexe" name="sexe">
+            <option value="{{enseignant.sexe}}">{{enseignant.sexe}}</option>
+            <option>أنثى</option>
+            <option>ذكر</option>
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="date_naiss">تاريخ الميلاد <span class="login-danger">*</span></label>
+        <input id="date_naiss" name="date_naiss" type="date" class="form-control" value="{{ enseignant.date_naiss|date:'Y-m-d' }}" >
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الجوال <span class="login-danger">*</span></label>
+<input type="text" class="form-control"  name="mobile" value="{{enseignant.mobile}}">
+</div>
+</div>
+{% comment %} <div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الراتب <span class="login-danger">*</span></label>
+<input type="number" class="form-control" name="salaire" value="{{enseignant.salaire}}">
+</div>
+</div> {% endcomment %}
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

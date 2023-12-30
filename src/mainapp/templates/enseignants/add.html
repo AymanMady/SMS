@@ -1,0 +1,86 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+    إضافة مدرّسين
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">إضافة مدرّسين</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="teachers.html">المدرّسين</a></li>
+<li class="breadcrumb-item active">إضافة مدرّسين</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/get_add_enseignant/">
+    {% csrf_token %}
+    <div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>معلومات أساسية</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الاسم <span class="login-danger">*</span></label>
+<input type="text" class="form-control" placeholder="أدخل الاسم" name="nom">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>اللقب <span class="login-danger">*</span></label>
+<input type="text" class="form-control" placeholder="أدخل اللقب" name="prenom">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="sexe">الجنس <span class="login-danger">*</span></label>
+        <select class="form-control select" id="sexe" name="sexe">
+            <option>اختر الجنس</option>
+            <option>أنثى</option>
+            <option>ذكر</option>
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="date_naiss">تاريخ الميلاد <span class="login-danger">*</span></label>
+        <input id="date_naiss" name="date_naiss" type="date" class="form-control" >
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الجوال <span class="login-danger">*</span></label>
+<input type="text" class="form-control" placeholder="أدخل رقم الجوال" name="mobile">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>الراتب <span class="login-danger">*</span></label>
+<input type="number" class="form-control" name="salaire">
+</div>
+</div>
+
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% load static %}
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<title>Login</title>
+
+<link rel="shortcut icon" href="SMS/img/favicon.png">
+
+<!--<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap" rel="stylesheet">-->
+
+<link rel="stylesheet" href="{% static 'SMS/plugins/bootstrap/css/bootstrap.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'SMS/plugins/feather/feather.css' %}">
+
+<link rel="stylesheet" href="{% static 'SMS/plugins/icons/flags/flags.css' %}">
+
+<link rel="stylesheet" href="{% static 'SMS/plugins/fontawesome/css/fontawesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'SMS/plugins/fontawesome/css/all.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'SMS/plugins/datatables/datatables.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'SMS/css/style.css' %}">
+</head>
+<body>
+
+<div class="main-wrapper login-body">
+<div class="login-wrapper">
+<div class="container">
+<div class="loginbox">
+<div class="login-left">
+<img class="img-fluid" src="{% static 'SMS/img/login.png' %}" alt="Logo">
+</div>
+<div class="login-right">
+<div class="login-right-wrap">
+<br>
+<center><h2> : تسجيل الدخول </h2></center>
+<br>
+<form method="post" action="{% url 'login' %}" >
+    {% csrf_token %}
+<div class="input-group mb-3" color="red">
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="form-group">
+<label>اسم المستخدم  <span class="login-danger">*</span></label>
+<input class="form-control" type="text" name="username">
+<span class="profile-views"><i class="fas fa-user-circle"></i></span>
+</div>
+<div class="form-group">
+<label>كلمة المرور <span class="login-danger">*</span></label>
+<input class="form-control pass-input" type="password" name="password">
+<span class="profile-views feather-eye toggle-password"></span>
+</div>
+<br>
+<div class="form-group">
+<button class="btn btn-primary btn-block" type="submit">تسجيل الدخول</button>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script src="{% static 'SMS/js/jquery-3.6.0.min.js' %}"></script>
+
+<script src="{% static 'SMS/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static 'SMS/js/feather.min.js' %}"></script>
+
+<script src="{% static 'SMS/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+<script src="{% static 'SMS/plugins/datatables/datatables.min.js' %}"></script>
+
+<script src="{% static 'SMS/js/script.js' %}"></script>
+</body>
+</html>

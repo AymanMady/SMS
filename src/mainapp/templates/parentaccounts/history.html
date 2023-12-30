@@ -1,0 +1,47 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+السجل التاريخ
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row">
+<div class="col-lg-12">
+<div class="card">
+<div class="card-header">
+<h5 class="card-title">السجل التاريخي</h5>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table mb-0">
+<thead>
+<tr>
+<th>الشهر</th>
+<th>المبلغ المدفوع</th>
+<th>تاريخ الدفع</th>
+<th>الحالة</th>
+</tr>
+</thead>
+<tbody>
+{% for i in parentpayment %}
+<tr>
+<td>{{ i.mois_paye.nom }}</td>
+<td>{{ i.montant_paye }}</td>
+<td>{{ i.date_payment }}</td>
+<td>{% if i.pay == False %} <span class="badge badge-danger">لم يتم الدفع</span>{% else %} <span class="badge badge-success">تم الدفع</span>{% endif %}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  الأولياء
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row">
+<div class="col-sm-12">
+<div class="page-sub-header">
+<h3 class="page-title">الأولياء</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="students.html">الأولياء</a></li>
+<li class="breadcrumb-item active">جميع الأولياء</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="student-group-form">
+<div class="row">
+<div class="col-lg-10 col-md-6">
+<div class="form-group">
+  <input type="text" class="form-control" id="searchInput"  placeholder=".....البحث">
+</div>
+</div>
+<div class="col-lg-2">
+<div class="search-student-btn">
+<button type="btn" class="btn btn-primary">بحث</button>
+</div>
+</div>
+</div>
+</div>
+    </form>
+<div class="row">
+<div class="col-sm-12">
+<div class="card card-table comman-shadow">
+<div class="card-body">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">الأولياء</h3>
+</div>
+<div class="col-auto text-end float-end ms-auto download-grp">
+<a  href="{% url 'add_mois' %}" class="btn btn-primary">اضافة شهر</a>
+<a  href="{% url 'add_payment' %}" class="btn btn-primary">دفع رسوم</a>
+</div>
+</div>
+</div>
+
+<div class="table-responsive">
+<table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped" id="dataTable">
+<thead class="student-thread">
+<tr>
+<th>
+<div class="form-check check-tables">
+<input class="form-check-input" type="checkbox" value="something">
+</div>
+</th>
+<th>الاسم واللقب</th>
+<th>رقم الهاتف</th>
+<th>القيمة</th>
+<th>الحالة</th>
+<th class="text-end">العملية</th>
+</tr>
+</thead>
+<tbody>
+{% for i in parents %}
+<tr>
+         <td>
+        <div class="form-check check-tables">
+        <input class="form-check-input" type="checkbox" value="something">
+        </div>
+        </td>
+        <td>{{i.nom}} </td>
+        <td>{{i.mobile}}</td>
+        <td>{{i.get_montant_restant}}</td>
+    <td>{% if i.get_montant_restant > 0 %} <span class="badge badge-danger">لم يدفع</span>{% else %} <span class="badge badge-success">دفع</span>{% endif %}</td>
+
+        <td class="text-end">
+        <div class="actions ">
+        <a href="/parent_history/{{i.id}}" class="btn btn-sm bg-success-light me-2 ">
+        <i class="feather-eye"></i>
+        </a>
+        </div>
+        </td>
+        </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+  {% if messages %}
+    {% for message in messages %}
+      {% if 'success' in message.tags %}
+        Swal.fire({
+          title: 'تمت الإضافة بنجاح',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'تم'
+        });
+      {% elif 'warning' in message.tags %}
+        Swal.fire({
+          title: 'تمت الإزالة بنجاح',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'تم'
+        });
+      {% elif 'info' in message.tags %}
+        Swal.fire({
+          title: 'تمت التعديل بنجاح',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'تم'
+        });
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</script>
+{% endblock %}

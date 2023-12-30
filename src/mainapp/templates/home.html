@@ -1,0 +1,144 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block title %}
+  Accueil
+{% endblock %}
+
+{% block content %}
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <div class="card bg-comman w-100">
+                            <div class="card-body">
+                                <div class="db-widgets d-flex justify-content-between align-items-center">
+                                    <div class="db-info">
+                                        <h6>الطلاب</h6>
+                                        <h3>{{ total_students }}</h3>
+                                    </div>
+                                    <div class="db-icon">
+                                        <img src="{% static 'SMS/img/dash/dash-1.png' %}" alt="" width="80">                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <div class="card bg-comman w-100">
+                            <div class="card-body">
+                                <div class="db-widgets d-flex justify-content-between align-items-center">
+                                    <div class="db-info">
+                                        <h6>المعلمين</h6>
+                                        <h3>{{ total_teachers }}</h3>
+                                    </div>
+                                    <div class="db-icon">
+                                        <img src="{% static 'SMS/img/dash/dash-2.png' %}" width="80" alt="">                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <div class="card bg-comman w-100">
+                            <div class="card-body">
+                                <div class="db-widgets d-flex justify-content-between align-items-center">
+                                    <div class="db-info">
+                                        <h6>الوكلاء</h6>
+                                        <h3>{{ total_parents }}</h3>
+                                    </div>
+                                    <div class="db-icon">
+                                        <img src="{% static 'SMS/img/dash/dash-3.png' %}" alt="" width="80">                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                        <div class="card bg-comman w-100">
+                            <div class="card-body">
+                                <div class="db-widgets d-flex justify-content-between align-items-center">
+                                    <div class="db-info">
+                                        <h6>الأرباح</h6>
+                                        <h3>{{ total_profit }}</h3>
+                                    </div>
+                                    <div class="db-icon">
+                                        <img src="{% static 'SMS/img/dash/dash-4.png' %}" alt="" width="80">                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- ... (votre code HTML existant) -->
+
+<div class="col-md-6">
+    <div class="main-card mb-3 card">
+      <div class="card-body">
+        <h5 class="card-title">Pourcentage de Filles et Garçons dans Chaque Classe</h5>
+        <canvas id="genderChart" width="600" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    var ctx = document.getElementById('genderChart').getContext('2d');
+    var etiquettesClasses = [
+      {% for data in gender_percentages %}
+        "{{ data.class }}",
+      {% endfor %}
+    ];
+    var pourcentagesFilles = [
+      {% for data in gender_percentages %}
+        {{ data.girls_percentage }},
+      {% endfor %}
+    ];
+    var pourcentagesGarcons = [
+      {% for data in gender_percentages %}
+        {{ data.boys_percentage }},
+      {% endfor %}
+    ];
+  
+    var genderChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: etiquettesClasses,
+        datasets: [
+          {
+            label: 'Filles',
+            data: pourcentagesFilles,
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Garçons',
+            data: pourcentagesGarcons,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100
+            }
+          }]
+        }
+      }
+    });
+  </script>
+  
+  <!-- ... (votre code HTML existant) -->
+  
+
+            </div>
+        </div>
+
+
+        
+
+{% endblock %}
+
+
+

@@ -1,0 +1,192 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generated Bulletins</title>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            font-size:15px; /* Réduisez la taille de la police */
+        }
+        .content {
+            width: 700px;
+        }
+        p {
+        line-height: 0.5;
+        }
+        table {
+            width: 95%; /* Augmenter la largeur du tableau (80% de la largeur de son conteneur) */
+            border: 1px solid #000; /* Ajouter une bordure au tableau */
+            border-collapse: collapse; /* Collapser les bordures des cellules pour une apparence plus nette */
+        }
+        th, td {
+            border: 1px solid #000; /* Ajouter une bordure aux cellules */
+            padding: 5px; /* Ajouter un peu d'espace intérieur aux cellules pour une meilleure lisibilité */
+            text-align: center; /* Centrer le texte dans les cellules */
+        }
+    </style>
+</head>
+<body>
+    <button class="download" >Download PDF </button>
+    <center>
+        <div class="elem" style="width:1100px">
+
+        {% for bulletin in bulletins %}
+    <div class="landing">
+            <div style="display: flex; justify-content: space-between;" >
+        <div>
+            <p>Complexe des écoles privées el awail</p>
+            <p>Lycée - Collège - Primaire - Jardin</p>
+            <p>Décrets conjoint N° : 2003 / 01110 </p>
+            <p>Tel : 33078199 - 27852258</p>
+        </div>
+
+        <div>
+            <img src="{% static 'assets/img/logo_app_small.png' %}" alt="logo" style="width: 100px;">
+        </div>
+
+        <div>
+            <p>مجمع مدارس الأوائل الحرة</p>
+            <p>روضة - إبتدائية - إعدادية - ثانوية</p>
+            <p>مقرر مشترك رقم : 01110 - 2003</p>
+            <p>الهاتف :  33078199 - 27852258</p>
+        </div>
+    </div>
+        <br>
+        <p></p>
+    <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between;width:300px">
+        <p>Classe:</p>
+        <p>{{ bulletin.etudiant.id_class.libelle }}</p>
+        <p>:القسم</p>
+        </div>
+        <p>السنة الدراسية </p>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between;width:100px">
+
+        <p>{{ bulletin.etudiant.numero_absence }}</p>
+        <p>: الرقم </p>
+        </div>
+        <p>{{ bulletin.etudiant.nom }}</p>
+        <p>: اسم التلميذ   </p>
+    </div>
+
+    <center>
+
+    <table style="width:790px">
+        <tr>
+            <th colspan="4">Bulletin des notes {{ bulletin.evaluation.libelle }}    كشف الدرجات   </th>
+        </tr>
+        <tr>
+            <td style="width:227px">Matiere en francais</td>
+            <td style="width:146px">Notes</td>
+            <td style="width:104px">الدرجات</td>
+            <td style="width:268px">المواد العربية</td>
+        </tr>
+    </table>
+    <div style="display: flex; justify-content: center;">
+    <div style="width: 395px">
+        <table style="width: 100%">
+            <script>
+                var note_fr = 0;
+            </script>
+            {% for note in bulletin.notes_fr %}
+                <tr>
+                    <td>{{ note.id_matiere.libelle }}</td>
+                    <td class="note_fr">{{ note.valeur }}</td>
+                    <script>
+                        note_fr += parseFloat(document.querySelector('#note_fr').innerText);
+                    </script>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="width: 395px">
+        <table style="width: 100%">
+            <script>
+                var note_ar = 0;
+            </script>
+            {% for note in bulletin.notes_ar %}
+                <tr>
+                    <td class="note_ar">{{ note.valeur }}</td>
+                    <td>{{ note.id_matiere.libelle }}</td>
+                    <script>
+                        note_ar += parseFloat(document.querySelector('#note_ar').innerText);
+                    </script>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<table style="width: 790px">
+    <tr>
+        <td colspan="2">Total Français: <p id="somme_note_fr"></p></td>
+        <td colspan="2">مجموع العربية: <p id="somme_note_ar"></p></td>
+        <script>
+            document.getElementById("somme_note_ar").innerHTML = note_ar;
+            document.getElementById("somme_note_fr").innerHTML = note_fr;
+        </script>
+    </tr>
+
+
+        <tr>
+            <td colspan="4">Moyenne Général : :المعدل العام</td>
+        </tr>
+        <tr>
+            <td colspan="4">Rang: :الرتبة</td>
+        </tr>
+        <tr>
+            <td colspan="4">Observations Générales : :الملاحظات العامة</td>
+        </tr>
+    </table>
+        <br>
+    <div style="display: flex; justify-content: space-between;">
+        <p>Maitre   </p>
+        <p>المعلم</p>
+        <p> توقيع الوكيل </p>
+        <p>Date: :التاريخ</p>
+    </div>
+
+        <p>ختم وتوقيع المدير</p>
+    </center>
+
+        <br>
+        <hr>
+        <br>
+    </div>
+
+    {% endfor %}
+
+     </div>
+
+    </center>
+    <script>
+        let div = document.querySelector(".elem");
+        let btn = document.querySelector(".download");
+
+        btn.addEventListener('click', () => {
+            const pdfOptions = {
+                filename: 'liste_des_absences.pdf', // nom du fichier
+                image: { type: 'jpeg', quality: 0.98 }, // format d'image et qualité
+                html2canvas: { scale: 2 }, // échelle pour html2canvas
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } // orientation paysage
+            };
+
+            const contentWidth = div.offsetWidth;
+            const contentHeight = div.offsetHeight;
+
+            html2pdf().from(div).set(pdfOptions).outputPdf(function(pdf) {
+                const totalPages = pdf.internal.getNumberOfPages();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    pdf.setPage(i);
+                    pdf.addImage(contentWidth, contentHeight);
+                }
+            }).save();
+        });
+</script>
+</body>
+</html>

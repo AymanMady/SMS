@@ -1,0 +1,121 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>إنشاء اشعارات</title>
+    <style>
+    body {
+        font-size:11px; /* Réduisez la taille de la police */
+    }
+    .content {
+        width: 700px;
+    }
+    p {
+    line-height: 0.5;
+    }
+
+
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<button class="download" >Download PDF </button>
+<div class="elem">
+    <center>
+        <div class="content">
+{% for parent, students in students_for_selected_parents.items %}
+
+            <div>
+                <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <p>Complexe des écoles privées el awail</p>
+                    <p> Jardin - Primaire - Collège -Lycée </p>
+                    <p>Décrets conjoint N° : 2003 / 01110 </p>
+                    <p>Tel : 33078199 - 27852258</p>
+                </div>
+
+                <div>
+                    <img src="{% static 'assets/img/logo_app_small.png' %}" alt="logo" style="width: 100px;">
+                </div>
+
+                <div>
+                    <p>مجمع مدارس الأوائل الحرة</p>
+                    <p>روضة - إبتدائية - إعدادية - ثانوية</p>
+                    <p>مقرر مشترك رقم : 01110 - 2003</p>
+                    <p>الهاتف :  33078199 - 27852258</p>
+                </div>
+            </div>
+
+            <center><strong><h2>إشـعـار</h2></strong></center>
+            <div style="display: flex; justify-content: space-between;">
+                <p></p>
+                <div style="display: flex; justify-content: space-between;width:300px">
+                 <p>{{ parent.nom }}</p>
+                <p>: يسر  إدارة مجمع مدارس الأوائل الحرة أن تطلب من السيد</p>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: right;">
+                <p></p>
+                <div style="display: flex; justify-content: space-between;width:300px">
+                {% for etudiant in students  %}
+                     <p>{{ etudiant.nom }}</p>
+                {% endfor %}
+                <p> :   وكيل التلاميذ  </p>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+
+                <p>  أوقية قديمة</p>
+                <p>   : البالغة</p>
+                <p>  : دفع مستحقات الأشهر   </p>
+
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <p> : التاريخ</p>
+                <p>تفاديًا لتعليق دراسته (ها) ولكم الشكر</p>
+            </div>
+            <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+        </div>
+
+        {% endfor %}
+
+        </div>
+
+    </center>
+
+
+</div>
+
+<script>
+    let div = document.querySelector(".elem");
+    let btn = document.querySelector(".download");
+
+    btn.addEventListener('click', () => {
+        const pdfOptions = {
+            filename: 'liste_des_absences.pdf', // nom du fichier
+            image: { type: 'jpeg', quality: 0.98 }, // format d'image et qualité
+            html2canvas: { scale: 2 }, // échelle pour html2canvas
+            jsPDF: { unit: 'mm', format: 'a4',  } // orientation paysage
+        };
+
+        const contentWidth = div.offsetWidth;
+        const contentHeight = div.offsetHeight;
+
+        html2pdf().from(div).set(pdfOptions).outputPdf(function(pdf) {
+            const totalPages = pdf.internal.getNumberOfPages();
+
+            for (let i = 1; i <= totalPages; i++) {
+                pdf.setPage(i);
+                pdf.addImage(contentWidth, contentHeight);
+            }
+        }).save();
+    });
+</script>
+
+</body>
+
+
+

@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<title>
+  لائحة الغياب لـشهـر
+</title>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Utilisez la police de caractères appropriée ici */
+        }
+        @page {
+            size: landscape;
+        }
+        table {
+            font-size: 11px; /* Réduisez la taille de la police */
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 4px; /* Réduisez la taille des cellules */
+        }
+        .cellint{
+           padding: 6px; /* Réduisez la taille des cellules */
+           font-size: 13px; /* Réduisez la taille de la police */
+        }
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="elem">
+
+
+<table border="1" cellspacing="0" cellpadding="8" align="center">
+  <thead>
+    <tr>
+        <th class="cellint">الإسم</th>
+        <th class="cellint">الرقم</th>
+        <th class="cellint">day</th>
+    </tr>
+  </thead>
+  <tbody>
+        {% for etudiant in etudiants %}
+    <tr>
+        <td class="cellint">{{ etudiant.nom }} </td>
+        <td class="cellint">{{etudiant.numero_absence}}</td>
+        <td class="cellint">{{ etudiant.id_parent.mobile }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+    <button class="download">Download PDF</button>
+    <script>
+        let div = document.querySelector(".elem");
+        let btn = document.querySelector(".download");
+
+        btn.addEventListener('click', () => {
+            const pdfOptions = {
+                filename: 'liste_des_absences.pdf', // nom du fichier
+                image: { type: 'jpeg', quality: 0.98 }, // format d'image et qualité
+                html2canvas: { scale: 2 }, // échelle pour html2canvas
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } // orientation paysage
+            };
+
+            const contentWidth = div.offsetWidth;
+            const contentHeight = div.offsetHeight;
+
+            html2pdf().from(div).set(pdfOptions).outputPdf(function(pdf) {
+                const totalPages = pdf.internal.getNumberOfPages();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    pdf.setPage(i);
+                    pdf.addImage(contentWidth, contentHeight);
+                }
+            }).save();
+        });
+</script>
+</body>
+

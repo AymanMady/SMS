@@ -1,0 +1,85 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  تعديل الإسناد
+{% endblock %}
+
+{% block content %}
+
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">تعديل الإسناد</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="subjects.html">الإسنادات</a></li>
+<li class="breadcrumb-item active">تعديل الإسناد</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/update_affectation/{{affectation.id}}">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>معلومات حول الإسناد</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_ens">المعلم <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_ens" name="id_ens">
+            {% for i in enseignants %}
+                <option value="{{ i.id }}"
+                {% if i.id == affectation.id_etud.id %}selected{% endif %}>
+                {{ i.nom }} {{ i.prenom }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_matiere">المادة <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_matiere" name="id_matiere">
+            {% for i in matieres %}
+                <option value="{{ i.id }}"
+                {% if i.id == affectation.id_matiere.id %}selected{% endif %}>
+                {{ i.libelle }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_class">الصف <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_class" name="id_class">
+            {% for i in classes %}
+                <option value="{{ i.id }}"
+                {% if i.id == affectation.id_class.id %}selected{% endif %}>
+                {{ i.libelle }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

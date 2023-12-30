@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<title>
+  لائحة الغياب لـشهـر
+</title>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Utilisez la police de caractères appropriée ici */
+        }
+        @page {
+            size: landscape;
+        }
+        table {
+            font-size: 11px; /* Réduisez la taille de la police */
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px; /* Réduisez la taille des cellules */
+        }
+        .cellint{
+           padding: 12px; /* Réduisez la taille des cellules */
+           font-size: 13px; /* Réduisez la taille de la police */
+        }
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <button class="download" >Download PDF </button>
+    <div class="elem">
+
+<center>
+    <div style="display: flex ; justify-content: space-evenly ; ">
+            <h3> لائحة الغياب لـشهـر {{ mois }} 2024</h3>
+            <h3>{{ classe.libelle }}</h3>
+            <h3>: القسم</h3>
+    </div>
+</center>
+<table border="1" cellspacing="0" cellpadding="8" align="center">
+  <thead>
+    <tr>
+        <th>31</th>
+        <th>30</th>
+        <th>29</th>
+        <th>28</th>
+        <th>27</th>
+        <th>26</th>
+        <th>25</th>
+        <th>24</th>
+        <th>23</th>
+        <th>22</th>
+        <th>21</th>
+        <th>20</th>
+        <th>19</th>
+        <th>18</th>
+        <th>17</th>
+        <th>16</th>
+        <th>15</th>
+        <th>14</th>
+        <th>13</th>
+        <th>12</th>
+        <th>11</th>
+        <th>10</th>
+        <th>9</th>
+        <th>8</th>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th class="cellint">الإسم</th>
+        <th class="cellint">الرقم</th>
+        <th class="cellint">رقم الوكيل</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for etudiant in etudiants %}
+        {% if forloop.counter >= 1 %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="cellint"> <strong>{{ etudiant.nom }}</strong>  </td>
+        <td class="cellint"> <strong>{{etudiant.numero_absence}}</strong> </td>
+        <td class="cellint">
+ {% if etudiant.id_parent.mobile == None %} {% else %} <strong>{{ etudiant.id_parent.mobile }}</strong>  {% endif %}
+        </td>
+    </tr>
+        {% endif %}
+
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+    <script>
+        let div = document.querySelector(".elem");
+        let btn = document.querySelector(".download");
+
+        btn.addEventListener('click', () => {
+            const pdfOptions = {
+                filename: 'liste_des_absences.pdf', // nom du fichier
+                image: { type: 'jpeg', quality: 0.98 }, // format d'image et qualité
+                html2canvas: { scale: 2 }, // échelle pour html2canvas
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } // orientation paysage
+            };
+
+            const contentWidth = div.offsetWidth;
+            const contentHeight = div.offsetHeight;
+
+            html2pdf().from(div).set(pdfOptions).outputPdf(function(pdf) {
+                const totalPages = pdf.internal.getNumberOfPages();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    pdf.setPage(i);
+                    pdf.addImage(contentWidth, contentHeight);
+                }
+            }).save();
+        });
+</script>
+</body>
+

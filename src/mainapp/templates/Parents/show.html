@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails du Parent</title>
+</head>
+<body>
+    <h1>Détails du Parent</h1>
+    <p>Nom du parent: {{ parent.nom }} {{ parent.prenom }}</p>
+    <p>Mobile: {{ parent.mobile }}</p>
+    <p>Date d'inscription: {{ parent.date_inscription }}</p>
+    <p>Frais mensuels à payer: {{ parent.frais_mensuels }}</p>
+    <p>Mois restants à payer: {{ parent.mois_restants_a_payer }}</p>
+    <p>montant_total_a_payer: {{ parent.montant_total_a_payer }}</p>
+
+
+    <h2>Enregistrer un paiement</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer le paiement</button>
+    </form>
+</body>
+</html>

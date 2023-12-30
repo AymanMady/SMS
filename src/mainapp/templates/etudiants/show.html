@@ -1,0 +1,167 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block title %}
+  الطلاب
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+<div class="page-header">
+<div class="row">
+<div class="col-sm-12">
+<div class="page-sub-header">
+<h3 class="page-title">تفاصيل الطالب</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="students.html">الطلاب</a></li>
+<li class="breadcrumb-item active">تفاصيل الطالب</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-body">
+<div class="row">
+<div class="col-md-12">
+<div class="about-info">
+<h4>الملف الشخصي <span><a href="javascript:;"><i class="feather-more-vertical"></i></a></span></h4>
+</div>
+<div class="student-profile-head">
+<div class="profile-bg-img">
+<img src="{% static 'assets/img/profile-bg.jpg' %}" alt="الملف الشخصي">
+</div>
+<div class="row">
+<div class="col-lg-4 col-md-4">
+<div class="profile-user-box">
+<div class="profile-user-img">
+           {% if etudiant.sexe == "أنثى" %} <img class="avatar-img rounded-circle" src="{% static 'assets/img/profiles/avatar_etudiante.png' %}" alt="صورة المستخدم">{% else %} <img class="avatar-img rounded-circle" src="{% static 'assets/img/profiles/avatar_etudiant.webp' %}" alt="صورة المستخدم"> {% endif %} </a>
+<div class="form-group students-up-files profile-edit-icon mb-0">
+<div class="uplod d-flex">
+<label class="file-upload profile-upbtn mb-0">
+<i class="feather-edit-3"></i><input type="file">
+</label>
+</div>
+</div>
+</div>
+<div class="names-profiles">
+<h4>{{etudiant.nom}} {{etudiant.prenom}}</h4>
+<h5></h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-4">
+<div class="student-personals-grp">
+<div class="card">
+<div class="card-body">
+<div class="heading-detail">
+<h4>: التفاصيل الشخصية </h4>
+</div>
+<div class="personal-activity">
+<div class="personal-icons">
+<i class="feather-user"></i>
+</div>
+<div class="views-personal">
+<h4>الاسم</h4>
+<h5>{{etudiant.nom}} {{etudiant.prenom}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="personal-icons">
+<img src="{% static 'assets/img/icons/buliding-icon.svg' %}" alt="">
+</div>
+<div class="views-personal">
+<h4>القسم </h4>
+<h5>{{etudiant.id_class.libelle}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="personal-icons">
+<i class="feather-phone-call"></i>
+</div>
+<div class="views-personal">
+<h4>الجوال</h4>
+<h5>{{etudiant.id_parent.mobile}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="personal-icons">
+<i class="feather-user"></i>
+</div>
+<div class="views-personal">
+<h4>الجنس</h4>
+<h5>{{etudiant.sexe}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="personal-icons">
+<i class="feather-calendar"></i>
+</div>
+<div class="views-personal">
+<h4>تاريخ الميلاد</h4>
+<h5>{{etudiant.date_naiss}}</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  <div class="col-lg-8">
+<div class="student-personals-grp">
+<div class="card">
+<div class="card-body">
+<div class="heading-detail">
+<h4> معلومات إضافية  :</h4>
+</div>
+<div class="personal-activity">
+<div class="views-personal">
+<h4>الاسم بالفرنسية</h4>
+<h5>{{etudiant.nom_fr}} {{etudiant.prenom_fr}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="views-personal">
+<h4>اسم الوكيل </h4>
+<h5>{{etudiant.id_parent.nom}} {{etudiant.id_parent.prenom}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="views-personal">
+<h4>RIM</h4>
+<h5>{{etudiant.RIM}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="views-personal">
+<h4>رقم التعريف الوطني NNI</h4>
+<h5>{{etudiant.NNI}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+<div class="views-personal">
+<h4>رقم النداء </h4>
+<h5>{{etudiant.numero_absence}}</h5>
+</div>
+</div>
+<div class="personal-activity">
+</div>
+<div class="views-personal">
+<h4> تاريخ التسجيل </h4>
+<h5>{{etudiant.date_inscription}}</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

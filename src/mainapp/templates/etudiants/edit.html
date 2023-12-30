@@ -1,0 +1,140 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+    تعديل الطالب
+{% endblock %}
+
+{% block content %}
+
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col-sm-12">
+<div class="page-sub-header">
+<h3 class="page-title">تعديل الطلاب</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="students.html">الطلاب</a></li>
+<li class="breadcrumb-item active">تعديل الطلاب</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card comman-shadow">
+<div class="card-body">
+<form method="post" action="/update_etudiant/{{etudiant.id}}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-12">
+            <h5 class="form-title student-info">معلومات الطالب <span><a href="javascript:;"><i class="feather-more-vertical"></i></a></span></h5>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="nom">الاسم الأول <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" id="nom" value="{{etudiant.nom}}" name="nom">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="prenom">اسم العائلة <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" id="prenom" value="{{etudiant.prenom}}" name="prenom">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="sexe">الجنس <span class="login-danger">*</span></label>
+                <select class="form-control select" id="sexe" name="sexe">
+                    <option value="{{etudiant.sexe}}">{{etudiant.sexe}}</option>
+                    <option>أنثى</option>
+                    <option>ذكر</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms" >
+                <label for="nom_fr">الاسم الأول بالفرنسية <span class="login-danger">*</span></label>
+                <input class="form-control" type="text" id="nom_fr" value="{{etudiant.nom_fr}}" name="nom_fr">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms" >
+                <label for="prenom_fr">اسم العائلة بالفرنسية<span class="login-danger">*</span></label>
+                <input class="form-control" type="text" id="prenom_fr" value="{{etudiant.prenom_fr}}" name="prenom_fr">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="date_naiss">تاريخ الميلاد <span class="login-danger">*</span></label>
+                <input id="date_naiss" name="date_naiss" type="date" class="form-control"  value="{{ etudiant.date_naiss|date:'Y-m-d' }}">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="RIM">رمز RIM</label>
+                <input class="form-control" type="text" id="RIM" value="{{etudiant.RIM}}" name="RIM" >
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="NNI">NNI</label>
+                <input class="form-control" type="number" id="NNI"  name="NNI" value="{{etudiant.NNI}}">
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="date_inscription">تاريخ التسجيل <span class="login-danger">*</span></label>
+                <input id="date_inscription" name="date_inscription" type="date" class="form-control" value="{{etudiant.date_inscription|date:'Y-m-d'}}" >
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="id_parent">المسؤول <span class="login-danger">*</span></label>
+                <select class="form-control select" id="id_parent" name="id_parent">
+                    {% for i in parents %}
+                        <option value="{{ i.id }}"
+                        {% if i.id == etudiant.id_parent.id %}selected{% endif %}>
+                        {{ i.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="id_class">الصف <span class="login-danger">*</span></label>
+                <select class="form-control select" id="id_class" name="id_class">
+                    {% for i in classes %}
+                        <option value="{{ i.id }}"
+                        {% if i.id == etudiant.id_class.id %}selected{% endif %}>
+                        {{ i.libelle }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4" >
+            <div class="form-group local-forms">
+                <label for="frais_mensuels">رسوم شهرية<span class="login-danger">*</span></label>
+                <input class="form-control" type="text" id="frais_mensuels"  name="frais_mensuels" value="{{etudiant.frais_mensuels}}">
+            </div>
+        </div>
+         <input class="form-control" type="text" id="numero_ab"  name="numero_absence" value="{{etudiant.numero_absence}}" style="display:None">
+
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

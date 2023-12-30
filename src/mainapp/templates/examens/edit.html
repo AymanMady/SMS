@@ -1,0 +1,64 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+    تعديل الامتحان
+{% endblock %}
+
+{% block content %}
+
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">تعديل الامتحان</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="subjects.html">الامتحانات</a></li>
+<li class="breadcrumb-item active">تعديل الامتحان</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/update_examen/{{examen.id}}">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>معلومات الامتحان</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+    <label for="libelle">الوصف<span class="login-danger">*</span></label>
+    <input class="form-control" type="text" id="libelle" value="{{examen.libelle}}" name="libelle">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+    <label for="coefficient">المعامل <span class="login-danger">*</span></label>
+    <input class="form-control" type="text" id="coefficient" value="{{examen.coefficient}}" name="coefficient">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>التاريخ <span class="login-danger">*</span></label>
+<input type="date" class="form-control" value="{{examen.date|date:'Y-m-d' }}" name="date">
+</div>
+</div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">حفظ</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

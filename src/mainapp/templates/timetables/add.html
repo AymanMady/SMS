@@ -1,0 +1,95 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  ajouter time table
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">Add Time Table</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="time-table.html">Time Table</a></li>
+<li class="breadcrumb-item active">Add Time Table</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/get_add_timetable/">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>Time Table</span></h5>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_ens"> المعلمون <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_ens" name="id_ens">
+            <option selected disabled>يرجى تحديد المعلم</option>
+            {% for i in enseignants %}
+                <option value="{{ i.id }}">{{ i.nom }} {{ i.prenom }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_matiere"> المواد <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_matiere" name="id_matiere">
+            <option selected disabled>يرجى تحديد المادة</option>
+            {% for i in matieres %}
+                <option value="{{ i.id }}">{{ i.libelle }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+    <div class="form-group local-forms">
+        <label for="id_class"> الصف <span class="login-danger">*</span></label>
+        <select class="form-control select" id="id_class" name="id_class">
+            <option selected disabled>يرجى تحديد الصف</option>
+            {% for i in classes %}
+                <option value="{{ i.id }}">{{ i.libelle }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>Start Time <span class="login-danger">*</span></label>
+<input type="time" class="form-control" name="start_time">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>End Time <span class="login-danger">*</span></label>
+<input type="time" class="form-control" name="end_time">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>Day <span class="login-danger">*</span></label>
+<input type="text" class="form-control" name="day">
+</div>
+</div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

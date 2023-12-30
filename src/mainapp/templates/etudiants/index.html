@@ -1,0 +1,173 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block title %}
+  الطلاب
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row">
+<div class="col-sm-12">
+<div class="page-sub-header">
+<h3 class="page-title">الطلاب</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="students.html">الطلاب</a></li>
+<li class="breadcrumb-item active">جميع الطلاب</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="student-group-form">
+<div class="row">
+<div class="col-lg-10 col-md-6">
+<div class="form-group">
+<input type="text" class="form-control" id="searchInput"  placeholder="ابحث هنا">
+</div>
+</div>
+
+<div class="col-lg-2">
+<div class="search-student-btn">
+<button  class="btn btn-primary">بحث</button>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card card-table comman-shadow">
+<div class="card-body">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">الطلاب</h3>
+</div>
+<div class="col-auto text-end float-end ms-auto download-grp">
+    <div style="display: flex; align-items: center;">
+        <div style="flex: 1;">
+            <form  method="post" enctype="multipart/form-data" action="{% url 'import-etudiants' %}">
+                {% csrf_token %}
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <input type="file" class="form-control" name="myfile" accept=".xlsx">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary me-2"><img src="{% static 'assets/img/excel.png' %}" alt=""><span class="ml-2">    Excel</span></button>
+
+                    </div>
+                    <div>
+                        <a href="{% url 'add_etudiant' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="table-responsive">
+<table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped" id="dataTable">
+<thead class="student-thread">
+<tr>
+<th>
+<div class="form-check check-tables">
+<input class="form-check-input" type="checkbox" value="something">
+</div>
+</th>
+<th> RIM رمز </th>
+<th class="text-center" colspan="2">الاسم واللقب</th>
+<th>الصف</th>
+<th>رقم النداء</th>
+<th>اسم الوكيل</th>
+<th>رقم الهاتف</th>
+<th>الجنس</th>
+<th class="text-center">الإجراء</th>
+</tr>
+</thead>
+<tbody>
+{% for i in etudiants %}
+<tr>
+         <td>
+        <div class="form-check check-tables">
+        <input class="form-check-input" type="checkbox" value="something">
+        </div>
+        </td>
+        <td>{{i.RIM}}</td>
+        <td>
+        <h2 class="table-avatar">
+        <a href="student-details.html" class="avatar avatar-sm me-2"> {% if i.sexe == "أنثى" %} <img class="avatar-img rounded-circle" src="{% static 'SMS/img/profiles/girl-student-avatar.png' %}" alt="صورة المستخدم">{% else %} <img class="avatar-img rounded-circle" src="{% static 'SMS/img/profiles/student-avatar.png' %}" alt="صورة المستخدم"> {% endif %} </a>
+        </h2>
+        <a href="student-details.html">{{i.prenom}}</a>
+        </td>
+        <td>
+       <a href="student-details.html">{{i.nom}} </a>
+        </td>
+        <td>{{i.id_class.libelle}}</td>
+        <td>{{i.numero_absence}}</td>
+        <td>{{i.id_parent.nom}}</td>
+        <td>{{i.id_parent.mobile}}</td>
+        <td>{{i.sexe}}</td>
+        <td class="text-end">
+        <div class="actions ">
+        <a href="/show_etudiant/{{i.id}}" class="btn btn-sm bg-success-light me-2 ">
+        <i class="feather-eye"></i>
+        </a>
+        <a href="/edit_etudiant/{{i.id}}" class="btn btn-sm bg-danger-light">
+        <i class="feather-edit"></i>
+        </a>
+        <a href="/delete_etudiant/{{i.id}}" class="btn btn-sm bg-danger-light">
+            <i class="feather-trash" ></i>
+        </a>
+        </div>
+        </td>
+        </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<script>
+    {% if messages %}
+      {% for message in messages %}
+        {% if 'success' in message.tags %}
+          Swal.fire({
+            title: 'تمت الإضافة بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% elif 'warning' in message.tags %}
+          Swal.fire({
+            title: 'تمت الإزالة بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% elif 'info' in message.tags %}
+          Swal.fire({
+            title: 'تمت التعديل بنجاح',
+            text: '{{ message }}',
+            icon: 'success',
+            confirmButtonText: 'تم'
+          });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </script>
+  
+{% endblock %}

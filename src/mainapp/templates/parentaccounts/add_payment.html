@@ -1,0 +1,78 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  دفع الرسوم الشهرية
+{% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col">
+<h3 class="page-title">دفع الرسوم الشهرية  </h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="time-table.html">دفع الرسوم</a></li>
+<li class="breadcrumb-item active">دفع الرسوم الشهرية  </li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+<div class="card-body">
+<form method="post" action="/get_add_payment/">
+    {% csrf_token %}
+<div class="row">
+<div class="col-12">
+<h5 class="form-title"><span>  دفع الرسوم الشهرية</span></h5>
+</div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="id_parent">الوكلاء <span class="login-danger">*</span></label>
+                <select class="form-control select" id="id_parent" name="id_parent">
+                    <option selected disabled>يرجى اختيار الوكيل</option>
+                    {% for i in parents %}
+                        <option value="{{ i.id }}">{{ i.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+          <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="id_mois">الاشهر <span class="login-danger">*</span></label>
+                <select class="form-control select" id="id_mois" name="mois_paye">
+                    <option selected disabled>يرجى اختيار الشهر</option>
+                    {% for i in mois %}
+                        <option value="{{ i.id }}">{{ i.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>القيمة <span class="login-danger">*</span></label>
+<input type="number" class="form-control" name="montant_paye">
+</div>
+</div>
+<div class="col-12 col-sm-4">
+<div class="form-group local-forms">
+<label>التاريخ<span class="login-danger">*</span></label>
+<input type="date" class="form-control" name="date_payment">
+</div>
+</div>
+<div class="col-12">
+<div class="student-submit">
+<button type="submit" class="btn btn-primary">دفع</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

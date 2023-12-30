@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+       <h2>Nom:{{etudiant.nom}}</h2>
+        <br>
+       <h2>evluation:{{evaluation.libelle}}</h2>
+        <br>
+    <table>
+        <tr>
+            <th>matiere</th>
+            <th>notes</th>
+        </tr>
+        {% for i in notes %}
+        <tr>
+            <td>{{i.id_matiere.libelle}}</td>
+            <td>{{i.valeur}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
